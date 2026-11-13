@@ -1,0 +1,923 @@
+63a64
+> !       febact: bacterial iron
+484a486,487
+>           n_upt_fac,     &
+>           p_upt_fac,     &
+566a570,573
+>           juptake_max_no3, &
+>           juptake_max_nh4, &
+>           juptake_max_po4, &
+>           juptake_max_fe, &
+571,573c578,599
+<           jprod_n_hetero_spec     , & 
+<           jresp_n_hetero     , & 
+<           liebig_lim  , & 
+---
+>           jprod_n_hetero_spec     , &
+>           jresp_n_hetero     , &
+>           jingest_net_n , &
+>           jingest_net_p , &
+>           jingest_net_fe , &
+>           inc_fe     , &
+>           avail_fe    , & 
+>           excess_hetero_n, &
+>           excess_hetero_p, &
+>           excess_hetero_fe, &
+>           used_n     , &
+>           used_p      , &
+>           frac_no3    , &
+>           frac_nh4    , &
+>           frac_po4    , &
+>           frac_het_n  , &
+>           frac_het_p  , &
+>           int_nlim    , &
+>           int_plim    , &
+>           int_felim   , &
+>           int_lim     , &
+>           liebig_lim  , &
+576c602
+<           mu_mix      , & 
+---
+>           mu_mix      , &  
+581c607,609
+<           q_fe_2_n    , & 
+---
+>           q_fe_2_n    , &
+>           fe2n_photo  , &
+>           def_fe_photo, & 
+583a612,614
+>           ngrowth     , &
+>           pgrowth     , &
+>           fegrowth    , &
+606c637,640
+<           psi             ! mixotrophy preference parameter
+---
+>           psi, &             ! mixotrophy preference parameter
+>           jingest_n_spec, &
+>           jingest_p_spec, &
+>           jingest_fe_spec
+637a672,675
+>           id_juptake_max_no3 = -1, &
+>           id_juptake_max_nh4 = -1, &
+>           id_juptake_max_po4 = -1, &
+>           id_juptake_max_fe = -1, &
+644c682,701
+<           id_jresp_n_hetero      = -1, & 
+---
+>           id_jresp_n_hetero      = -1, &
+>           id_jingest_net_n      = -1, &
+>           id_jingest_net_p      = -1, &
+>           id_jingest_net_fe    = -1, &
+>           id_inc_fe            = -1, &
+>           id_avail_fe          = -1, &
+>           id_excess_hetero_n = -1, &
+>           id_excess_hetero_p = -1, &
+>           id_excess_hetero_fe = -1, & 
+>           id_used_n       = -1, &
+>           id_used_p       = -1, &
+>           id_frac_no3     = -1, &
+>           id_frac_nh4     = -1, &
+>           id_frac_po4     = -1, &
+>           id_frac_het_n   = -1, &
+>           id_frac_het_p   = -1, &
+>           id_int_nlim     = -1, &
+>           id_int_plim     = -1, &
+>           id_int_felim    = -1, &
+>           id_int_lim      = -1, &
+653a711,712
+>           id_fe2n_photo     = -1, &
+>           id_def_fe_photo     = -1, &
+657a717,719
+>           id_ngrowth      = -1, &
+>           id_pgrowth      = -1, &
+>           id_fegrowth     = -1, &
+720c782,783
+<           q_p_2_n             ! p:n ratio for bacteria 
+---
+>           q_p_2_n,          & ! p:n ratio for bacteria 
+>           q_fe_2_n            ! fe:n ratio for bacteria
+729a793
+>           f_fe,              & ! bacteria iron biomass
+731a796
+>           jzloss_fe,        & ! Losses of Fe due to consumption by zooplankton & mixotrophs
+735a801
+>           jvirloss_fe,      & ! iron losses via viruses
+737a804
+>           juptake_fe,       & ! Total uptake of fe
+740a808,809
+>           jprod_fed,         & ! bacterial iron production
+>           jprod_fe,         & ! new bacterial biomass 
+746a816
+>           id_jzloss_fe      = -1, &
+750a821
+>           id_jvirloss_fe    = -1, &
+752a824
+>           id_juptake_fe     = -1, &
+754a827,828
+>           id_jprod_fed      = -1, &
+>           id_jprod_fe       = -1, &
+948a1023
+>           jfebact,&
+1197a1273
+>           p_febact,&
+1258a1335
+>           id_febact        = -1,       &
+1863a1941
+> 
+2299a2378,2393
+>     vardesc_temp = vardesc("int_nlim_Mx","Internal N Limitation of Mixotroph",'h','L','s','dimensionless','f')
+>     mixo(1)%id_int_nlim = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+>     vardesc_temp = vardesc("int_plim_Mx","Internal P Limitation of Mixotroph",'h','L','s','dimensionless','f')
+>     mixo(1)%id_int_plim = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+>     vardesc_temp = vardesc("int_felim_Mx","Internal Fe Limitation of Mixotroph",'h','L','s','dimensionless','f')
+>     mixo(1)%id_int_felim = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+>     vardesc_temp = vardesc("int_lim_Mx","Internal Nutrient Limitation of Mixotroph",'h','L','s','dimensionless','f')
+>     mixo(1)%id_int_lim = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+2303a2398,2405
+>     vardesc_temp = vardesc("fe2n_photo_Mx","Autotrophic Fe:N ratio of Mixotroph",'h','L','s','mol Fe/mol N','f')
+>     mixo(1)%id_fe2n_photo = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+>     vardesc_temp = vardesc("def_fe_photo_Mx","Mixotroph Autotrophic Fe Deficiency",'h','L','s','dimensionless','f')
+>     mixo(1)%id_def_fe_photo = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+2363a2466,2470
+>     vardesc_temp = vardesc("jingest_net_n_Mx","Net Ingestion of nitrogen by mixotrophs, layer integral",&
+>                            'h','L','s','mol N m-2 s-1','f')
+>     mixo(1)%id_jingest_net_n = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+2368a2476,2480
+>     vardesc_temp = vardesc("jingest_net_p_Mx","Net Ingestion of phosphorous by mixotrophs, layer integral",&
+>                            'h','L','s','mol P m-2 s-1','f')
+>     mixo(1)%id_jingest_net_p = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+2378a2491,2495
+>     vardesc_temp = vardesc("jingest_net_fe_Mx","Net Ingestion of iron by mixotrophs, layer integral",&
+>                            'h','L','s','mol Fe m-2 s-1','f')
+>     mixo(1)%id_jingest_net_fe = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+2492a2610,2621
+>     vardesc_temp = vardesc("ngrowth_Mx","Mixotroph Autotrophic N growth",'h','L','s','mol m-2 s-1','f')
+>     mixo(1)%id_ngrowth = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+>     vardesc_temp = vardesc("pgrowth_Mx","Mixotroph Autotrophic P growth",'h','L','s','mol m-2 s-1','f')
+>     mixo(1)%id_pgrowth = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+>     vardesc_temp = vardesc("fegrowth_Mx","Mixotroph Autotrophic Fe growth",'h','L','s','mol m-2 s-1','f')
+>     mixo(1)%id_fegrowth = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+2504c2633
+<     vardesc_temp = vardesc("jprod_nmx_hetero","Secondary Production of new biomass (nitrogen) by mixotrophs, layer integral",&
+---
+>     vardesc_temp = vardesc("jprod_nmx_hetero","Production of new biomass (nitrogen) by mixotrophs, layer integral",&
+2925a3055,3058
+>     
+>     vardesc_temp = vardesc("juptake_fe","Bacterial uptake of dissolved iron",'h','L','s','mol Fe m-2 s-1','f')
+>     bact(1)%id_juptake_fe = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+2940a3074,3079
+>     
+>     ! iron
+>     vardesc_temp = vardesc("jprod_fe_Bact","Production of iron by bacteria, layer integral",&
+>                    'h','L','s','mol Fe m-2 s-1','f')
+>     bact(1)%id_jprod_fed = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+2950a3090,3094
+>     vardesc_temp = vardesc("jprod_febact","Production of new biomass (iron) by bacteria, layer integral",&
+>                            'h','L','s','mol Fe m-2 s-1','f')
+>     bact(1)%id_jprod_fe = register_diag_field(package_name, vardesc_temp%name, axes(1:3),&
+>          init_time, vardesc_temp%longname,vardesc_temp%units, missing_value = missing_value1)
+> 
+4948c5092
+<     vardesc_temp = vardesc("limnmisc_raw","Nitrogen Limitation of MIxotrophs",'h','1','s','1','f')
+---
+>     vardesc_temp = vardesc("limnmixo_raw","Nitrogen Limitation of Mixotrophs",'h','1','s','1','f')
+4983c5127
+<     vardesc_temp = vardesc("limirrmisc_raw","Irradiance Limitation of Mixotrophs",'h','1','s','1','f')
+---
+>     vardesc_temp = vardesc("limirrmixo_raw","Irradiance Limitation of Mixotrophs",'h','1','s','1','f')
+4986c5130
+<          cmor_field_name="limirrmisc", cmor_units="1",                          &
+---
+>          cmor_field_name="limirrmixo", cmor_units="1",                          &
+5018c5162
+<     vardesc_temp = vardesc("limfemisc_raw","Iron Limitation of Mixotrophs",'h','1','s','1','f')
+---
+>     vardesc_temp = vardesc("limfemixo_raw","Iron Limitation of Mixotrophs",'h','1','s','1','f')
+6124a6269
+>     call g_tracer_add_param('q_fe_2_n_bact',bact(1)%q_fe_2_n, 1.0e-6*106.0/16.0) ! mol Fe mol N-1
+6187a6333,6334
+>     call g_tracer_add_param('n_upt_fac',mixo(1)%n_upt_fac, 0.5)                   ! mol N mol N -1
+>     call g_tracer_add_param('p_upt_fac',mixo(1)%p_upt_fac, 0.5)                   ! mol P mol N -1
+6438,6439c6585,6586
+<     call g_tracer_add_param('eta', mixo(1)%eta, 0.9)                       ! none
+<     call g_tracer_add_param('nu', mixo(1)%nu, 0.0 /sperd)                     ! s-1 usually 1.0
+---
+>     call g_tracer_add_param('eta', mixo(1)%eta, 1.0)                       ! none
+>     call g_tracer_add_param('nu', mixo(1)%nu, 0.0 /sperd)                     ! usually 1.0 s-1
+6670a6818,6825
+>     !    Febact: Bacteria iron
+>     !
+>     call g_tracer_add(tracer_list,package_name,&
+>          name       = 'febact',          &
+>          longname   = 'bacterial',      &
+>          units      = 'mol/kg',         &
+>          prog       = .true.            )
+>     !
+7324c7479
+<     real,dimension(1:NUM_PRED,1:NUM_PREY) :: ipa_matrix,pa_matrix,ingest_matrix
+---
+>     real,dimension(1:NUM_PRED,1:NUM_PREY) :: ipa_matrix,pa_matrix,ingest_matrix,ingest_matrix_spec
+7329c7484
+<     real :: bact_uptake_ratio, vmax_bact, growth_ratio
+---
+>     real :: bact_uptake_ratio, bact_fe_uptake_ratio, vmax_bact, growth_ratio
+7342a7498,7499
+>     real, dimension(:,:,:), Allocatable :: new_psi
+> 
+7547a7705
+>     call g_tracer_get_values(tracer_list,'febact'   ,'field',bact(1)%f_fe(:,:,:) ,isd,jsd,ntau=tau,positive=.true.)
+7582a7741
+> 
+7604a7764,7765
+>        mixo(1)%fe2n_photo(i,j,k) = max(0.0,(mixo(1)%f_fe(i,j,k) - (1-mixo(1)%psi(i,j,k))*mixo(1)%k_fe_2_n*mixo(1)%f_n(i,j,k))/ &
+>             max(epsln,(mixo(1)%psi(i,j,k)*max(epsln,mixo(1)%f_n(i,j,k)))))
+7652a7814,7815
+>        mixo(1)%def_fe_photo(i,j,k) = mixo(1)%fe2n_photo(i,j,k)**2.0 / (mixo(1)%k_fe_2_n**2.0 +  &
+>             mixo(1)%fe2n_photo(i,j,k)**2.0)
+7756,7793d7918
+<        if (mixo(1)%nu == 0.0) then
+<           mixo(1)%psi(i,j,k) = mixo(1)%psi_static
+<        else
+<           mixo(1)%psi(i,j,k) = mixo(1)%psi_n(i,j,k) / mixo(1)%f_n(i,j,k)
+<        end if
+< 
+<        ! Mixotroph Instantaneous Growth Rate
+<        P_C_m = max(mixo(1)%eta * mixo(1)%liebig_lim(i,j,k)*mixo(1)%P_C_max*cobalt%expkT(i,j,k),epsln)
+< 
+<        ! Calculate the autotrophic-specific grwoth rate for mixotrophs
+<        mixo(1)%theta(i,j,k) = (mixo(1)%thetamax-cobalt%thetamin) / (1.0 +                   &
+<             mixo(1)%thetamax*mixo(1)%alpha*cobalt%irr_inst(i,j,k)*0.5 /  &
+<             P_C_m) + cobalt%thetamin
+<        mixo(1)%irrlim(i,j,k) = (1.0-exp(-mixo(1)%alpha*cobalt%irr_inst(i,j,k)*              &
+<             mixo(1)%theta(i,j,k)/P_C_m))
+<        mixo(1)%mu(i,j,k) = P_C_m / (1.0 + cobalt%zeta) * mixo(1)%irrlim(i,j,k) - &
+<             cobalt%expkT(i,j,k)*mixo(1)%bresp_auto*                                      &
+<             mixo(1)%f_n(i,j,k)/(cobalt%refuge_conc + mixo(1)%f_n(i,j,k))
+<        mixo(1)%jprod_n_auto_spec(i,j,k) = mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k)
+< 
+<        ! Mixotroph Memory Growth Rate
+<        mixo(1)%theta(i,j,k) = mixo(1)%psi(i,j,k) * (mixo(1)%thetamax-cobalt%thetamin) / (1.0 +                   &
+<             mixo(1)%psi(i,j,k)*mixo(1)%thetamax*mixo(1)%alpha*cobalt%f_irr_mem(i,j,k)*0.5 /  &
+<             P_C_m) + mixo(1)%psi(i,j,k)*cobalt%thetamin
+<        cobalt%f_chl(i,j,k) = cobalt%f_chl(i,j,k)+0.5*cobalt%c_2_n*12.0e6*mixo(1)%theta(i,j,k)*   &
+<             mixo(1)%f_n(i,j,k)
+<        mixo(1)%irrlim(i,j,k) = (1.0-exp(-mixo(1)%alpha*cobalt%irr_inst(i,j,k)*              &
+<             mixo(1)%theta(i,j,k)/P_C_m))
+<        mixo(1)%mu(i,j,k) = P_C_m / (1.0 + cobalt%zeta) * mixo(1)%irrlim(i,j,k) - &
+<             cobalt%expkT(i,j,k)*mixo(1)%psi(i,j,k)*mixo(1)%bresp_auto*                                      &
+<             mixo(1)%f_n(i,j,k)/(cobalt%refuge_conc + mixo(1)%f_n(i,j,k))
+<        mixo(1)%jprod_n_auto(i,j,k) = mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k)
+< 
+<        mixo(1)%jresp_n_auto(i,j,k) = cobalt%expkT(i,j,k)*mixo(1)%psi(i,j,k)*mixo(1)%bresp_auto*      &
+<             mixo(1)%f_n(i,j,k) * mixo(1)%f_n(i,j,k)/(cobalt%refuge_conc + mixo(1)%f_n(i,j,k))
+< 
+<        mixo(1)%mu_mix(i,j,k) = mixo(1)%mu(i,j,k)
+< 
+7809,7818d7933
+<           ! Mixotrophs
+<           kblt = 0 ; tmp_mu_ML = 0.0 ; tmp_hblt = 0.0
+<           do k = 1, nk !{
+<                if ((k == 1) .or. (tmp_hblt .lt. hblt_depth(i,j))) then !{
+<                kblt = kblt+1
+<                tmp_mu_ML = tmp_mu_ML + mixo(1)%mu_mix(i,j,k) * dzt(i,j,k)
+<                tmp_hblt = tmp_hblt + dzt(i,j,k)
+<                endif !}
+<           enddo !} k-loop
+<           mixo(1)%mu_mix(i,j,1:kblt) = tmp_mu_ML / max(epsln,tmp_hblt)
+7826,7829d7940
+< 
+<           ! Mixotrophs
+<           mixo(1)%f_mu_mem(i,j,k) = mixo(1)%f_mu_mem(i,j,k) + (mixo(1)%mu_mix(i,j,k) - &
+<                mixo(1)%f_mu_mem(i,j,k))*min(1.0,cobalt%gamma_mu_mem*dt)*grid_tmask(i,j,k)
+7861,7866c7972,7997
+<        mixo(1)%juptake_no3(i,j,k) = max( 0.0, mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k)*   & 
+<             mixo(1)%no3lim(i,j,k)/(mixo(1)%no3lim(i,j,k)+mixo(1)%nh4lim(i,j,k)+epsln) )
+<        mixo(1)%juptake_nh4(i,j,k) = max( 0.0, mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k)*   & 
+<             mixo(1)%nh4lim(i,j,k)/(mixo(1)%no3lim(i,j,k)+mixo(1)%nh4lim(i,j,k)+epsln) )
+<        cobalt%jprod_nh4(i,j,k) = cobalt%jprod_nh4(i,j,k) - min(0.0,mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k))
+<        cobalt%jo2resp_wc(i,j,k) = cobalt%jo2resp_wc(i,j,k) - min(0.0,mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k))*cobalt%o2_2_nh4
+---
+>        !mixo(1)%juptake_no3(i,j,k) = max( 0.0, mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k)*   & 
+>             !mixo(1)%no3lim(i,j,k)/(mixo(1)%no3lim(i,j,k)+mixo(1)%nh4lim(i,j,k)+epsln) )
+>        !mixo(1)%juptake_nh4(i,j,k) = max( 0.0, mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k)*   & 
+>             !mixo(1)%nh4lim(i,j,k)/(mixo(1)%no3lim(i,j,k)+mixo(1)%nh4lim(i,j,k)+epsln) )
+>        ! cobalt%jprod_nh4(i,j,k) = cobalt%jprod_nh4(i,j,k) - min(0.0,mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k))
+>        ! cobalt%jo2resp_wc(i,j,k) = cobalt%jo2resp_wc(i,j,k) - min(0.0,mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k))*cobalt%o2_2_nh4
+> 
+>        ! Mixotroph potenial N uptake
+> 
+>        !mixo(1)%juptake_no3(i,j,k) = max( 0.0, mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k)*   & 
+>             !mixo(1)%no3lim(i,j,k)/(mixo(1)%no3lim(i,j,k)+mixo(1)%nh4lim(i,j,k)+epsln) )
+>        !mixo(1)%juptake_nh4(i,j,k) = max( 0.0, mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k)*   & 
+>             !mixo(1)%nh4lim(i,j,k)/(mixo(1)%no3lim(i,j,k)+mixo(1)%nh4lim(i,j,k)+epsln) )
+> 
+>        mixo(1)%juptake_no3(i,j,k) = mixo(1)%P_C_max * cobalt%expkT(i,j,k) * mixo(1)%f_n(i,j,k) * mixo(1)%psi(i,j,k) * &
+>             (min((mixo(1)%no3lim(i,j,k)+mixo(1)%nh4lim(i,j,k)),1.0)) * mixo(1)%no3lim(i,j,k)/(mixo(1)%no3lim(i,j,k)+mixo(1)%nh4lim(i,j,k)+epsln) &
+>             * (mixo(1)%n_upt_fac/cobalt%expkT(i,j,k)) * mixo(1)%eta
+>        mixo(1)%juptake_nh4(i,j,k) = mixo(1)%P_C_max * cobalt%expkT(i,j,k) * mixo(1)%f_n(i,j,k) * mixo(1)%psi(i,j,k) * &
+>             (min((mixo(1)%no3lim(i,j,k)+mixo(1)%nh4lim(i,j,k)),1.0)) * mixo(1)%nh4lim(i,j,k)/(mixo(1)%no3lim(i,j,k)+mixo(1)%nh4lim(i,j,k)+epsln) &
+>             * (mixo(1)%n_upt_fac/cobalt%expkT(i,j,k))  * mixo(1)%eta
+> 
+>        mixo(1)%juptake_max_no3(i,j,k) = mixo(1)%P_C_max * cobalt%expkT(i,j,k) * mixo(1)%f_n(i,j,k) * mixo(1)%psi(i,j,k) * &
+>             mixo(1)%no3lim(i,j,k)/(mixo(1)%no3lim(i,j,k)+mixo(1)%nh4lim(i,j,k)+epsln) * (mixo(1)%n_upt_fac/cobalt%expkT(i,j,k))  * mixo(1)%eta
+>        mixo(1)%juptake_max_nh4(i,j,k) = mixo(1)%P_C_max * cobalt%expkT(i,j,k) * mixo(1)%f_n(i,j,k) * mixo(1)%psi(i,j,k) * &
+>             mixo(1)%nh4lim(i,j,k)/(mixo(1)%no3lim(i,j,k)+mixo(1)%nh4lim(i,j,k)+epsln) * (mixo(1)%n_upt_fac/cobalt%expkT(i,j,k))  * mixo(1)%eta
+>        
+7885,7888c8016,8025
+<        mixo(1)%juptake_po4(i,j,k) = (mixo(1)%juptake_no3(i,j,k)+   &
+<             mixo(1)%juptake_nh4(i,j,k)) * mixo(1)%p_2_n_static
+<        cobalt%jprod_po4(i,j,k) = cobalt%jprod_po4(i,j,k) - &
+<             min(0.0,mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k))*mixo(1)%p_2_n_static
+---
+>        !mixo(1)%juptake_po4(i,j,k) = (mixo(1)%juptake_no3(i,j,k)+   &
+>             !mixo(1)%juptake_nh4(i,j,k)) * mixo(1)%p_2_n_static
+>        !cobalt%jprod_po4(i,j,k) = cobalt%jprod_po4(i,j,k) - &
+>             ! min(0.0,mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k))*mixo(1)%p_2_n_static
+> 
+>        mixo(1)%juptake_po4(i,j,k) = mixo(1)%P_C_max * mixo(1)%p_2_n_static * cobalt%expkT(i,j,k) * mixo(1)%f_n(i,j,k) * &
+>             mixo(1)%po4lim(i,j,k) * mixo(1)%psi(i,j,k) * (mixo(1)%p_upt_fac/cobalt%expkT(i,j,k))  * mixo(1)%eta
+>        mixo(1)%juptake_max_po4(i,j,k) = mixo(1)%P_C_max * mixo(1)%p_2_n_static * cobalt%expkT(i,j,k) * &
+>             mixo(1)%f_n(i,j,k) * mixo(1)%psi(i,j,k) * (mixo(1)%p_upt_fac/cobalt%expkT(i,j,k))  * mixo(1)%eta
+> 
+7906c8043
+<           mixo(1)%felim(i,j,k)*cobalt%fe_2_n_upt_fac
+---
+>             mixo(1)%eta*mixo(1)%psi(i,j,k)*mixo(1)%felim(i,j,k)*cobalt%fe_2_n_upt_fac
+7909a8047,8048
+>        mixo(1)%juptake_max_fe(i,j,k) = mixo(1)%P_C_max*cobalt%expkT(i,j,k)*mixo(1)%f_n(i,j,k)* &
+>             mixo(1)%eta*mixo(1)%psi(i,j,k)*mixo(1)%psi(i,j,k)*cobalt%fe_2_n_upt_fac * mixo(1)%eta
+7948a8088,8089
+>        bact_fe_uptake_ratio = ( cobalt%f_fed(i,j,k)/max(cobalt%f_ldon(i,j,k),epsln) )
+>        bact(1)%juptake_fe(i,j,k) = bact(1)%juptake_ldon(i,j,k)*bact_fe_uptake_ratio
+7954c8095,8096
+<                                     bact(1)%juptake_ldop(i,j,k)/bact(1)%q_p_2_n)
+---
+>                                     bact(1)%juptake_ldop(i,j,k)/bact(1)%q_p_2_n, &
+>                                     bact(1)%juptake_fe(i,j,k)/bact(1)%q_fe_2_n)
+7973a8116,8118
+>        bact(1)%jprod_fed(i,j,k) = bact(1)%juptake_fe(i,j,k) - max(bact(1)%jprod_n(i,j,k)*bact(1)%q_fe_2_n,0.0)
+>        cobalt%jprod_fed(i,j,k) = cobalt%jprod_fed(i,j,k) + bact(1)%jprod_fed(i,j,k)
+> 
+8094c8239
+<     prey_fe2n_vec(5) = 0.0
+---
+>     prey_fe2n_vec(5) = bact(1)%q_fe_2_n
+8190c8335,8336
+<                                   ingest_matrix(m,4)*prey_fe2n_vec(4)
+---
+>                                   ingest_matrix(m,4)*prey_fe2n_vec(4) + &
+>                                   ingest_matrix(m,5)*prey_fe2n_vec(5)
+8289a8436,8439
+>        ingest_matrix_spec(m,3) = mixo(1)%temp_lim(i,j,k)*mixo(1)%o2lim(i,j,k)*mixo(1)%imax* &
+>                      pa_matrix(m,3)*prey_vec(3)*mixo(1)%f_n(i,j,k)/(mixo(1)%ki+tot_prey(m))
+>        ingest_matrix_spec(m,5) = mixo(1)%temp_lim(i,j,k)*mixo(1)%o2lim(i,j,k)*mixo(1)%imax* &
+>                      pa_matrix(m,5)*prey_vec(5)*mixo(1)%f_n(i,j,k)/(mixo(1)%ki+tot_prey(m))
+8293c8443,8446
+<        mixo(1)%jingest_fe(i,j,k) = ingest_matrix(m,3)*prey_fe2n_vec(3)
+---
+>        mixo(1)%jingest_fe(i,j,k) = ingest_matrix(m,3)*prey_fe2n_vec(3) + ingest_matrix(m,5)*prey_fe2n_vec(5)
+>        mixo(1)%jingest_n_spec(i,j,k) = ingest_matrix_spec(m,3) + ingest_matrix_spec(m,5)
+>        mixo(1)%jingest_p_spec(i,j,k) = ingest_matrix_spec(m,3)*prey_p2n_vec(3) + ingest_matrix_spec(m,5)*prey_p2n_vec(5)
+>        mixo(1)%jingest_fe_spec(i,j,k) = ingest_matrix_spec(m,3)*prey_fe2n_vec(3) + ingest_matrix_spec(m,5)*prey_fe2n_vec(5)
+8353c8506,8507
+<        bact(1)%jzloss_p(i,j,k) = bact(1)%jzloss_n(i,j,k)*prey_p2n_vec(4)
+---
+>        bact(1)%jzloss_p(i,j,k) = bact(1)%jzloss_n(i,j,k)*prey_p2n_vec(5)
+>        bact(1)%jzloss_fe(i,j,k) = bact(1)%jzloss_n(i,j,k)*prey_fe2n_vec(5)
+8449a8604
+>        bact(1)%jvirloss_fe(i,j,k) = bact(1)%jvirloss_n(i,j,k)*bact(1)%q_fe_2_n
+8467c8622
+<        mixo(1)%jexuloss_p(i,j,k) = mixo(1)%exu*max(mixo(1)%juptake_po4(i,j,k),0.0)
+---
+>        mixo(1)%jexuloss_p(i,j,k) = mixo(1)%jexuloss_n(i,j,k) * mixo(1)%q_p_2_n(i,j,k) !mixo(1)%exu*max(mixo(1)%juptake_po4(i,j,k),0.0)
+8521d8675
+<        mixo(1)%jprod_fedet(i,j,k) = mixo(1)%phi_det*mixo(1)%jingest_fe(i,j,k)
+8534d8687
+<        cobalt%jprod_fedet(i,j,k) = cobalt%jprod_fedet(i,j,k) + mixo(1)%jprod_fedet(i,j,k)
+8602a8756
+>        cobalt%jprod_fed(i,j,k)   = cobalt%jprod_fed(i,j,k) + bact(1)%jvirloss_fe(i,j,k)
+8682a8837
+> 
+8685c8840,8842
+<        mixo(1)%jprod_n_hetero(i,j,k) = mixo(1)%gge_max*mixo(1)%jingest_n(i,j,k) - &
+---
+> 
+>        mixo(1)%jingest_net_fe(i,j,k) = assim_eff*mixo(1)%jingest_fe(i,j,k)        
+>        mixo(1)%jingest_net_n(i,j,k) = mixo(1)%gge_max*mixo(1)%jingest_n(i,j,k) - &
+8688,8689c8845,8849
+<        mixo(1)%jprod_n_hetero(i,j,k) = min(mixo(1)%jprod_n_hetero(i,j,k), &
+<                                      assim_eff*mixo(1)%jingest_p(i,j,k)/mixo(1)%q_p_2_n(i,j,k))
+---
+>        mixo(1)%jingest_net_p(i,j,k) = assim_eff*mixo(1)%jingest_p(i,j,k)
+>           
+>        mixo(1)%jprod_n_hetero(i,j,k) = min(mixo(1)%jingest_net_n(i,j,k), mixo(1)%jingest_net_p(i,j,k)/mixo(1)%q_p_2_n(i,j,k), &
+>                                      mixo(1)%jingest_net_fe(i,j,k)/mixo(1)%k_fe_2_n)
+> 
+8691c8851
+<        mixo(1)%jprod_n_hetero_spec(i,j,k) = mixo(1)%gge_max*mixo(1)%jingest_n(i,j,k)/(mixo(1)%eta * (1.0-mixo(1)%psi(i,j,k))) - &
+---
+>        mixo(1)%jprod_n_hetero_spec(i,j,k) = mixo(1)%gge_max*mixo(1)%jingest_n_spec(i,j,k) - &
+8695c8855,8856
+<                                      assim_eff*(mixo(1)%jingest_p(i,j,k)/(mixo(1)%eta * (1.0-mixo(1)%psi(i,j,k))))/mixo(1)%q_p_2_n(i,j,k))
+---
+>                                      assim_eff*(mixo(1)%jingest_p_spec(i,j,k))/mixo(1)%q_p_2_n(i,j,k), &
+>                                      assim_eff*mixo(1)%jingest_fe_spec(i,j,k) / mixo(1)%k_fe_2_n)
+8700a8862,8935
+> 
+>        if (mixo(1)%jprod_n_hetero(i,j,k) .gt. 0.0) then
+>             mixo(1)%excess_hetero_n(i,j,k) = max(0.0,(mixo(1)%jingest_net_n(i,j,k) - mixo(1)%jprod_n_hetero(i,j,k)))
+>             mixo(1)%excess_hetero_p(i,j,k) = max(0.0,(mixo(1)%jingest_net_p(i,j,k) - (mixo(1)%jprod_n_hetero(i,j,k) * mixo(1)%q_p_2_n(i,j,k))))
+>             mixo(1)%excess_hetero_fe(i,j,k) = max(0.0,(mixo(1)%jingest_net_fe(i,j,k) - (mixo(1)%jprod_n_hetero(i,j,k) * mixo(1)%k_fe_2_n)))
+>        else
+>             mixo(1)%excess_hetero_n(i,j,k) = 0.0
+>             mixo(1)%excess_hetero_p(i,j,k) = 0.0
+>             mixo(1)%excess_hetero_fe(i,j,k) = 0.0
+>        end if
+> 
+>        mixo(1)%inc_fe(i,j,k) = mixo(1)%f_n(i,j,k) * mixo(1)%k_fe_2_n
+>        mixo(1)%avail_fe(i,j,k) = max(0.0, mixo(1)%f_fe(i,j,k) - mixo(1)%inc_fe(i,j,k))
+>        mixo(1)%int_nlim(i,j,k) = min(((mixo(1)%juptake_no3(i,j,k) + mixo(1)%juptake_nh4(i,j,k) + mixo(1)%excess_hetero_n(i,j,k)) / &
+>             (mixo(1)%juptake_max_no3(i,j,k) + mixo(1)%juptake_max_nh4(i,j,k))), 1.0)
+>        mixo(1)%int_plim(i,j,k) = min(((mixo(1)%juptake_po4(i,j,k) + mixo(1)%excess_hetero_p(i,j,k)) / mixo(1)%juptake_max_po4(i,j,k)), 1.0)
+>        mixo(1)%int_felim(i,j,k) = min(((mixo(1)%juptake_fe(i,j,k) + mixo(1)%excess_hetero_fe(i,j,k) + mixo(1)%avail_fe(i,j,k)) / mixo(1)%juptake_max_fe(i,j,k)), 1.0)
+>        mixo(1)%int_lim(i,j,k) = min(mixo(1)%int_nlim(i,j,k),mixo(1)%int_plim(i,j,k), mixo(1)%def_fe(i,j,k))
+> 
+> 
+>        if (mixo(1)%nu == 0.0) then
+>           mixo(1)%psi(i,j,k) = mixo(1)%psi_static
+>        else
+>           mixo(1)%psi(i,j,k) = mixo(1)%psi_n(i,j,k) / mixo(1)%f_n(i,j,k)
+>        end if
+> 
+>        ! Mixotroph Instantaneous Growth Rate
+>        P_C_m = max(mixo(1)%eta*mixo(1)%int_lim(i,j,k)*mixo(1)%P_C_max*cobalt%expkT(i,j,k),epsln)
+> 
+>        ! Calculate the autotrophic-specific grwoth rate for mixotrophs
+>        mixo(1)%theta(i,j,k) = (mixo(1)%thetamax-cobalt%thetamin) / (1.0 +                   &
+>             mixo(1)%thetamax*mixo(1)%alpha*cobalt%f_irr_mem(i,j,k)*0.5 /  &
+>             P_C_m) + cobalt%thetamin
+>        cobalt%f_chl(i,j,k) = cobalt%f_chl(i,j,k)+0.5*cobalt%c_2_n*12.0e6*mixo(1)%theta(i,j,k)*   &
+>             mixo(1)%f_n(i,j,k)*mixo(1)%psi(i,j,k)
+>        mixo(1)%irrlim(i,j,k) = (1.0-exp(-mixo(1)%alpha*cobalt%irr_inst(i,j,k)*              &
+>             mixo(1)%theta(i,j,k)/P_C_m))
+>        mixo(1)%mu(i,j,k) = mixo(1)%psi(i,j,k)*(P_C_m / (1.0 + cobalt%zeta) * mixo(1)%irrlim(i,j,k) - &
+>             cobalt%expkT(i,j,k)*mixo(1)%bresp_auto*                                      &
+>             mixo(1)%f_n(i,j,k)/(cobalt%refuge_conc + mixo(1)%f_n(i,j,k)))
+> 
+>        mixo(1)%ngrowth(i,j,k) = mixo(1)%juptake_no3(i,j,k) + mixo(1)%juptake_nh4(i,j,k) + mixo(1)%excess_hetero_n(i,j,k)
+>        mixo(1)%pgrowth(i,j,k) = (mixo(1)%juptake_po4(i,j,k) + mixo(1)%excess_hetero_p(i,j,k)) / mixo(1)%q_p_2_n(i,j,k)
+>        mixo(1)%fegrowth(i,j,k) = (mixo(1)%juptake_fe(i,j,k) + mixo(1)%excess_hetero_fe(i,j,k) + mixo(1)%avail_fe(i,j,k)) / mixo(1)%k_fe_2_n
+> 
+>        mixo(1)%jprod_n_auto(i,j,k) = min(mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k), &
+>             mixo(1)%ngrowth(i,j,k), mixo(1)%pgrowth(i,j,k), mixo(1)%fegrowth(i,j,k))
+> 
+>        mixo(1)%used_n(i,j,k) = max(0.0, mixo(1)%jprod_n_auto(i,j,k)) / (mixo(1)%juptake_no3(i,j,k) + mixo(1)%juptake_nh4(i,j,k) + &
+>                          mixo(1)%excess_hetero_n(i,j,k) + epsln)
+>        mixo(1)%used_p(i,j,k) = max(0.0, mixo(1)%jprod_n_auto(i,j,k)*mixo(1)%q_p_2_n(i,j,k)) / (mixo(1)%juptake_po4(i,j,k) + &
+>                          mixo(1)%excess_hetero_p(i,j,k) + epsln)
+>        mixo(1)%frac_no3(i,j,k) = mixo(1)%juptake_no3(i,j,k) * mixo(1)%used_n(i,j,k)
+>        mixo(1)%frac_nh4(i,j,k) = mixo(1)%juptake_nh4(i,j,k) * mixo(1)%used_n(i,j,k)
+>        mixo(1)%frac_het_n(i,j,k) = mixo(1)%excess_hetero_n(i,j,k) * mixo(1)%used_n(i,j,k)
+>        mixo(1)%frac_po4(i,j,k) = mixo(1)%juptake_po4(i,j,k) * mixo(1)%used_p(i,j,k)
+>        mixo(1)%frac_het_p(i,j,k) = mixo(1)%excess_hetero_p(i,j,k) * mixo(1)%used_p(i,j,k)
+> 
+>        cobalt%jprod_nh4(i,j,k) = cobalt%jprod_nh4(i,j,k) - min(0.0,mixo(1)%jprod_n_auto(i,j,k))
+>        cobalt%jo2resp_wc(i,j,k) = cobalt%jo2resp_wc(i,j,k) - min(0.0,mixo(1)%jprod_n_auto(i,j,k))*cobalt%o2_2_nh4
+>        cobalt%jprod_po4(i,j,k) = cobalt%jprod_po4(i,j,k) - min(0.0,mixo(1)%jprod_n_auto(i,j,k))*mixo(1)%p_2_n_static
+> 
+>        mixo(1)%jresp_n_auto(i,j,k) = cobalt%expkT(i,j,k)*mixo(1)%psi(i,j,k)*mixo(1)%bresp_auto*      &
+>             mixo(1)%f_n(i,j,k) * mixo(1)%f_n(i,j,k)/(cobalt%refuge_conc + mixo(1)%f_n(i,j,k))
+> 
+>        mixo(1)%mu_mix(i,j,k) = mixo(1)%mu(i,j,k)
+>               
+>        ! Mixotroph Iron
+>        mixo(1)%jprod_fedet(i,j,k) = mixo(1)%phi_det*mixo(1)%jingest_fe(i,j,k)
+>        mixo(1)%jprod_fed(i,j,k) = (1.0 - (assim_eff + mixo(1)%phi_det))* mixo(1)%jingest_fe(i,j,k)
+>        cobalt%jprod_fed(i,j,k) = cobalt%jprod_fed(i,j,k) + mixo(1)%jprod_fed(i,j,k)
+>        cobalt%jprod_fedet(i,j,k) = cobalt%jprod_fedet(i,j,k) + mixo(1)%jprod_fedet(i,j,k)
+> 
+> 
+8707,8712c8942,8949
+<             mixo(1)%jprod_nh4(i,j,k) =  mixo(1)%jingest_n(i,j,k) - mixo(1)%jprod_ndet(i,j,k) -  &
+<                                      mixo(1)%jprod_n_hetero(i,j,k) - mixo(1)%jprod_ldon(i,j,k) - &
+<                                      mixo(1)%jprod_sldon(i,j,k) - mixo(1)%jprod_srdon(i,j,k)
+<             mixo(1)%jprod_po4(i,j,k) =  mixo(1)%jingest_p(i,j,k) - mixo(1)%jprod_pdet(i,j,k) - & 
+<                                      mixo(1)%jprod_n_hetero(i,j,k)*mixo(1)%q_p_2_n(i,j,k) - mixo(1)%jprod_ldop(i,j,k) -  &
+<                                      mixo(1)%jprod_sldop(i,j,k) - mixo(1)%jprod_srdop(i,j,k)
+---
+>             mixo(1)%jprod_nh4(i,j,k) = mixo(1)%jingest_n(i,j,k) - mixo(1)%jprod_ndet(i,j,k) - &
+>                                  mixo(1)%jprod_ldon(i,j,k) - mixo(1)%jprod_sldon(i,j,k) - &
+>                                  mixo(1)%jprod_srdon(i,j,k) - mixo(1)%jprod_n_hetero(i,j,k) - &
+>                                  mixo(1)%frac_het_n(i,j,k)
+>             mixo(1)%jprod_po4(i,j,k) = mixo(1)%jingest_p(i,j,k) - mixo(1)%jprod_pdet(i,j,k) - &
+>                                  mixo(1)%jprod_ldop(i,j,k) - mixo(1)%jprod_sldop(i,j,k) - &
+>                                  mixo(1)%jprod_srdop(i,j,k) - mixo(1)%jprod_n_hetero(i,j,k)*mixo(1)%q_p_2_n(i,j,k) &
+>                                  -  mixo(1)%frac_het_p(i,j,k)
+8714,8720c8951,8956
+<             ! None of the ingestion material goes to zooplankton production
+<             mixo(1)%jprod_nh4(i,j,k) =  mixo(1)%jingest_n(i,j,k) - mixo(1)%jprod_ndet(i,j,k) - & 
+<                                      mixo(1)%jprod_ldon(i,j,k) - mixo(1)%jprod_sldon(i,j,k) - & 
+<                                      mixo(1)%jprod_srdon(i,j,k)
+<             mixo(1)%jprod_po4(i,j,k) =  mixo(1)%jingest_p(i,j,k) - mixo(1)%jprod_pdet(i,j,k) - &
+<                                      mixo(1)%jprod_ldop(i,j,k) - mixo(1)%jprod_sldop(i,j,k) - & 
+<                                      mixo(1)%jprod_srdop(i,j,k)
+---
+>             mixo(1)%jprod_nh4(i,j,k) = mixo(1)%jingest_n(i,j,k) - mixo(1)%jprod_ndet(i,j,k) - &
+>                                  mixo(1)%jprod_ldon(i,j,k) - mixo(1)%jprod_sldon(i,j,k) - &
+>                                  mixo(1)%jprod_srdon(i,j,k)
+>             mixo(1)%jprod_po4(i,j,k) = mixo(1)%jingest_p(i,j,k) - mixo(1)%jprod_pdet(i,j,k) - &
+>                                  mixo(1)%jprod_ldop(i,j,k) - mixo(1)%jprod_sldop(i,j,k) - &
+>                                  mixo(1)%jprod_srdop(i,j,k)
+8728,8729c8964,8966
+<             cobalt%jprod_pdet(i,j,k) = cobalt%jprod_pdet(i,j,k) - mixo(1)%jprod_n_hetero(i,j,k)*mixo(1)%q_p_2_n(i,j,k) 
+<        endif
+---
+>             cobalt%jprod_pdet(i,j,k) = cobalt%jprod_pdet(i,j,k) - mixo(1)%jprod_n_hetero(i,j,k)*mixo(1)%q_p_2_n(i,j,k)
+>           endif
+> 
+8737,8742d8973
+<        ! Any ingested iron that is not allocated to detritus is routed back to the
+<        ! dissolved pool.       
+<        !
+<        mixo(1)%jprod_fed(i,j,k) = (1.0 - mixo(1)%phi_det)*mixo(1)%jingest_fe(i,j,k)
+<        cobalt%jprod_fed(i,j,k) = cobalt%jprod_fed(i,j,k) + mixo(1)%jprod_fed(i,j,k)
+<        !
+8758a8990,9005
+>     do j = jsc, jec ; do i = isc, iec !{ 
+>           kblt = 0 ; tmp_mu_ML = 0.0 ; tmp_hblt = 0.0
+>           do k = 1, nk !{
+>                if ((k == 1) .or. (tmp_hblt .lt. hblt_depth(i,j))) then !{
+>                kblt = kblt+1
+>                tmp_mu_ML = tmp_mu_ML + mixo(1)%mu_mix(i,j,k) * dzt(i,j,k)
+>                tmp_hblt = tmp_hblt + dzt(i,j,k)
+>                endif !}
+>           enddo !} k-loop
+>           mixo(1)%mu_mix(i,j,1:kblt) = tmp_mu_ML / max(epsln,tmp_hblt)
+>      enddo; enddo !} i,j
+>      do k = 1, nk ; do j = jsc, jec ; do i = isc, iec !{
+>           mixo(1)%f_mu_mem(i,j,k) = mixo(1)%f_mu_mem(i,j,k) + (mixo(1)%mu_mix(i,j,k) - &
+>                mixo(1)%f_mu_mem(i,j,k))*min(1.0,cobalt%gamma_mu_mem*dt)*grid_tmask(i,j,k)
+>      enddo ; enddo; enddo !} i,j,k
+> 
+9177a9425
+>     call g_tracer_get_pointer(tracer_list,'febact' ,'field',cobalt%p_febact )
+9214a9463,9466
+>     allocate(new_psi(isc:iec,jsc:jec,1:nk))
+> 
+> 
+> 
+9245c9497
+<                     cobalt%p_fedet(i,j,k,tau))*grid_tmask(i,j,k)
+---
+>                     cobalt%p_fedet(i,j,k,tau) + cobalt%p_febact(i,j,k,tau))*grid_tmask(i,j,k)
+9296c9548
+<        cobalt%jnmx(i,j,k) = mixo(1)%mu(i,j,k)*mixo(1)%f_n(i,j,k) + mixo(1)%jprod_n_hetero(i,j,k) -    &
+---
+>        cobalt%jnmx(i,j,k) = mixo(1)%jprod_n_hetero(i,j,k) + mixo(1)%jprod_n_auto(i,j,k) -    &
+9299c9551
+<                             mixo(1)%jexuloss_n(i,j,k)                                         
+---
+>                             mixo(1)%jexuloss_n(i,j,k)
+9314a9567
+>        new_psi(i,j,k) = mixo(1)%psi(i,j,k) + cobalt%jpsi_mx(i,j,k)*dt*grid_tmask(i,j,k)
+9316c9569
+<        cobalt%jpsi_nmx(i,j,k) = mixo(1)%psi(i,j,k)*cobalt%jnmx(i,j,k) + cobalt%jpsi_mx(i,j,k)*mixo(1)%f_n(i,j,k)
+---
+>        ! cobalt%jpsi_nmx(i,j,k) = mixo(1)%psi(i,j,k)*cobalt%jnmx(i,j,k) + cobalt%jpsi_mx(i,j,k)*mixo(1)%f_n(i,j,k)
+9318c9571,9573
+<        cobalt%p_psi_nmx(i,j,k,tau) = cobalt%p_psi_nmx(i,j,k,tau) + cobalt%jpsi_nmx(i,j,k)*dt*grid_tmask(i,j,k)
+---
+>        ! cobalt%p_psi_nmx(i,j,k,tau) = cobalt%p_psi_nmx(i,j,k,tau) + cobalt%jpsi_nmx(i,j,k)*dt*grid_tmask(i,j,k)
+>        cobalt%p_psi_nmx(i,j,k,tau) = cobalt%p_nmx(i,j,k,tau)*new_psi(i,j,k)
+> 
+9361c9616
+<        cobalt%jfemx(i,j,k) = mixo(1)%juptake_fe(i,j,k) - &
+---
+>        cobalt%jfemx(i,j,k) = mixo(1)%juptake_fe(i,j,k) + mixo(1)%jingest_net_fe(i,j,k) - &
+9371a9627,9630
+> 
+>        cobalt%jfebact(i,j,k) = bact(1)%juptake_fe(i,j,k) - bact(1)%jprod_fed(i,j,k) - &
+>                               bact(1)%jvirloss_fe(i,j,k) - bact(1)%jzloss_fe(i,j,k)
+>        cobalt%p_febact(i,j,k,tau) = cobalt%p_febact(i,j,k,tau) + cobalt%jfebact(i,j,k)*dt*grid_tmask(i,j,k)
+9408c9667
+<                              mixo(1)%juptake_no3(i,j,k) - cobalt%jno3denit_wc(i,j,k)
+---
+>                              cobalt%jno3denit_wc(i,j,k) - mixo(1)%frac_no3(i,j,k)
+9420c9679
+<                             mixo(1)%juptake_nh4(i,j,k) - cobalt%jnitrif(i,j,k)
+---
+>                             cobalt%jnitrif(i,j,k) - mixo(1)%frac_nh4(i,j,k)
+9427c9686
+<                             mixo(1)%juptake_po4(i,j,k)
+---
+>                             mixo(1)%frac_po4(i,j,k)
+9445c9704
+<                             mixo(1)%juptake_fe(i,j,k) - cobalt%jfe_ads(i,j,k)
+---
+>                             mixo(1)%juptake_fe(i,j,k) - cobalt%jfe_ads(i,j,k) - bact(1)%juptake_fe(i,j,k)
+9449a9709
+> 
+9693c9953
+< 
+---
+>     
+9711a9972,9999
+>            write(*,*) 'N imbalance at i,j,k =', i, j, k
+>            write(*,*) 'pre_totn(i,j,k) =', pre_totn(i,j,k)
+>            write(*,*) 'post_totn(i,j,k) =', post_totn(i,j,k)
+>            write(*,*) 'actual change     =', post_totn(i,j,k) - pre_totn(i,j,k)
+>            write(*,*) 'net_srcn(i,j,k)=', net_srcn(i,j,k)
+>            write(*,*) 'cobalt%jno3denit_wc(i,j,k)=', cobalt%jno3denit_wc(i,j,k)
+>            write(*,*) 'imbal =', imbal
+>            write(*,*) 'mixo(1)%psi(i,j,k) =', mixo(1)%psi(i,j,k)
+>            write(*,*) 'new_psi(i,j,k) =', new_psi(i,j,k)
+>            write(*,*) 'cobalt%jpsi_mx(i,j,k) =', cobalt%jpsi_mx(i,j,k)
+>            write(*,*) 'mixo(1)%psi_n(i,j,k) =', mixo(1)%psi_n(i,j,k)
+>            write(*,*) 'cobalt%p_psi_nmx(i,j,k,tau) =', cobalt%p_psi_nmx(i,j,k,tau)
+>            write(*,*) 'mixo(1)%f_n(i,j,k) =', mixo(1)%f_n(i,j,k)
+>            write(*,*) 'cobalt%p_nmx(i,j,k,tau) =', cobalt%p_nmx(i,j,k,tau)
+>            write(*,*) 'cobalt%jnmx(i,j,k) =', cobalt%jnmx(i,j,k)
+>            write(*,*) 'mixo(1)%mu(i,j,k) =', mixo(1)%mu(i,j,k)
+>            write(*,*) 'cobalt%jno3(i,j,k) =', cobalt%jno3(i,j,k)
+>            write(*,*) 'cobalt%jnh4(i,j,k) =', cobalt%jnh4(i,j,k)
+> 
+>            write(*,*) 'phyto(DIAZO)%juptake_n2(i,j,k) =', phyto(DIAZO)%juptake_n2(i,j,k)
+>            write(*,*) 'cobalt%p_ndi(i,j,k,tau) =', cobalt%p_ndi(i,j,k,tau)
+>            write(*,*) 'cobalt%jndi(i,j,k) =', cobalt%jndi(i,j,k)
+>            write(*,*) 'mixo(1)%juptake_no3(i,j,k) =', mixo(1)%juptake_no3(i,j,k)
+>            write(*,*) 'mixo(1)%juptake_nh4(i,j,k) =', mixo(1)%juptake_nh4(i,j,k)
+>            write(*,*) 'mixo(1)%jprod_n_auto(i,j,k) =', mixo(1)%jprod_n_auto(i,j,k)
+>            write(*,*) 'mixo(1)%jprod_n_hetero(i,j,k) =', mixo(1)%jprod_n_hetero(i,j,k)
+> 
+>            
+9741a10030,10037
+>            write(*,*) 'P imbalance at i,j,k =', i, j, k
+>            write(*,*) 'pre_totp(i,j,k) =', pre_totp(i,j,k)
+>            write(*,*) 'post_totp(i,j,k) =', post_totp(i,j,k)
+>            write(*,*) 'actual change     =', post_totp(i,j,k) - pre_totp(i,j,k)
+>            write(*,*) 'imbal =', imbal
+>            write(*,*) 'mixo(1)%juptake_po4(i,j,k) =', mixo(1)%juptake_po4(i,j,k)
+>            write(*,*) 'mixo(1)%jexuloss_p(i,j,k) =', mixo(1)%jexuloss_p(i,j,k)
+>  
+9748c10044
+<                     cobalt%p_femx(i,j,k,tau) + cobalt%p_fedet(i,j,k,tau))*grid_tmask(i,j,k)
+---
+>                     cobalt%p_femx(i,j,k,tau) + cobalt%p_fedet(i,j,k,tau) + cobalt%p_febact(i,j,k,tau))*grid_tmask(i,j,k)
+9750a10047,10099
+>              write(*,*) 'Fe imbalance at i,j,k =', i, j, k
+> 
+>              write(*,*) '--- Fe budget reconstruction ---'
+>              write(*,*) 'actual change     =', post_totfe(i,j,k) - pre_totfe(i,j,k)
+>              write(*,*) 'net_srcfe         =', net_srcfe(i,j,k)
+> 
+>              ! External sources
+>              write(*,*) 'jfe_coast*dt      =', cobalt%jfe_coast(i,j,k)*dt
+>              write(*,*) 'ffe_iceberg*dt    =', cobalt%ffe_iceberg(i,j)*dt   ! check if depth-dependent
+> 
+>              ! Scavenging/adsorption (sink)
+>              write(*,*) 'jfe_ads*dt        =', cobalt%jfe_ads(i,j,k)*dt
+> 
+>              ! Phytoplankton uptake (sinks from dissolved)
+>              write(*,*) 'jfesm*dt          =', cobalt%jfesm(i,j,k)*dt
+>              write(*,*) 'jfelg*dt          =', cobalt%jfelg(i,j,k)*dt
+>              write(*,*) 'jfedi*dt          =', cobalt%jfedi(i,j,k)*dt
+>              write(*,*) 'jfemx*dt          =', cobalt%jfemx(i,j,k)*dt
+> 
+>              ! Bacterial iron
+>              write(*,*) 'jfebact*dt        =', cobalt%jfebact(i,j,k)*dt
+>              write(*,*) 'juptake_fe*dt     =', bact(1)%juptake_fe(i,j,k)*dt
+>              write(*,*) 'jprod_fed*dt      =', bact(1)%jprod_fed(i,j,k)*dt
+>              write(*,*) 'jvirloss_fe*dt    =', bact(1)%jvirloss_fe(i,j,k)*dt
+>              write(*,*) 'jzloss_fe*dt      =', bact(1)%jzloss_fe(i,j,k)*dt
+> 
+>              ! Detrital iron
+>              write(*,*) 'jfedet*dt         =', cobalt%jfedet(i,j,k)*dt
+> 
+>              ! Reconstructed expected change
+>              write(*,*) 'expected change   =', (net_srcfe(i,j,k) &
+>                + cobalt%jfedi(i,j,k)*dt &
+>                - cobalt%jfe_ads(i,j,k)*dt &
+>                - cobalt%jfesm(i,j,k)*dt &
+>                - cobalt%jfelg(i,j,k)*dt &
+>                - cobalt%jfemx(i,j,k)*dt &
+>                - cobalt%jfebact(i,j,k)*dt &   ! sign depends on your convention
+>                - cobalt%jfedet(i,j,k)*dt)
+> 
+>              write(*,*) 'residual          =', (post_totfe(i,j,k) - pre_totfe(i,j,k)) - &
+>                (net_srcfe(i,j,k) &
+>                + cobalt%jfedi(i,j,k)*dt &
+>                - cobalt%jfe_ads(i,j,k)*dt &
+>                - cobalt%jfesm(i,j,k)*dt &
+>                - cobalt%jfelg(i,j,k)*dt &
+>                - cobalt%jfemx(i,j,k)*dt &
+>                - cobalt%jfebact(i,j,k)*dt &
+>                - cobalt%jfedet(i,j,k)*dt)
+> 
+>              write(*,*) 'mixo jprod_fedet*dt  =', mixo(1)%jprod_fedet(i,j,k)*dt
+>              write(*,*) 'mixo jprod_fed*dt    =', mixo(1)%jprod_fed(i,j,k)*dt  
+>              write(*,*) 'mixo jingest_fe*dt   =', mixo(1)%jingest_fe(i,j,k)*dt
+> 
+9849c10198
+<          cobalt%p_fedet(:,:,:,tau)) * rho_dzt(:,:,:) 
+---
+>          cobalt%p_fedet(:,:,:,tau) + cobalt%p_febact(:,:,:,tau)) * rho_dzt(:,:,:) 
+10813a11163,11178
+>        if (mixo(1)%id_int_nlim .gt. 0)          &
+>             used = g_send_data(mixo(1)%id_int_nlim,     mixo(1)%int_nlim,             &
+>             model_time, rmask = grid_tmask,& 
+>             is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+>        if (mixo(1)%id_int_plim .gt. 0)          &
+>             used = g_send_data(mixo(1)%id_int_plim,     mixo(1)%int_plim,             &
+>             model_time, rmask = grid_tmask,& 
+>             is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+>        if (mixo(1)%id_int_felim .gt. 0)          &
+>             used = g_send_data(mixo(1)%id_int_felim,     mixo(1)%int_felim,             &
+>             model_time, rmask = grid_tmask,& 
+>             is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+>        if (mixo(1)%id_int_lim .gt. 0)          &
+>             used = g_send_data(mixo(1)%id_int_lim,     mixo(1)%int_lim,             &
+>             model_time, rmask = grid_tmask,& 
+>             is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+10821a11187,11194
+>        if (mixo(1)%id_fe2n_photo .gt. 0)        &
+>             used = g_send_data(mixo(1)%id_fe2n_photo,   mixo(1)%fe2n_photo,           &
+>             model_time, rmask = grid_tmask,& 
+>             is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+>        if (mixo(1)%id_def_fe_photo .gt. 0)        &
+>             used = g_send_data(mixo(1)%id_def_fe_photo,   mixo(1)%def_fe_photo,           &
+>             model_time, rmask = grid_tmask,& 
+>             is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+10825a11199,11210
+>        if (mixo(1)%id_ngrowth .gt. 0)        &
+>             used = g_send_data(mixo(1)%id_ngrowth,   mixo(1)%ngrowth*rho_dzt,           &
+>             model_time, rmask = grid_tmask,& 
+>             is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+>        if (mixo(1)%id_pgrowth .gt. 0)        &
+>             used = g_send_data(mixo(1)%id_pgrowth,   mixo(1)%pgrowth*rho_dzt,           &
+>             model_time, rmask = grid_tmask,& 
+>             is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+>        if (mixo(1)%id_fegrowth .gt. 0)        &
+>             used = g_send_data(mixo(1)%id_fegrowth,   mixo(1)%fegrowth*rho_dzt,           &
+>             model_time, rmask = grid_tmask,& 
+>             is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+10845a11231,11234
+>        if (mixo(1)%id_jingest_net_n .gt. 0)          &
+>             used = g_send_data(mixo(1)%id_jingest_net_n, mixo(1)%jingest_net_n*rho_dzt,           &
+>             model_time, rmask = grid_tmask,&
+>             is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+10849a11239,11242
+>        if (mixo(1)%id_jingest_net_p .gt. 0)          &
+>             used = g_send_data(mixo(1)%id_jingest_net_p, mixo(1)%jingest_net_p*rho_dzt,           &
+>             model_time, rmask = grid_tmask,&
+>             is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+10857a11251,11254
+>        if (mixo(1)%id_jingest_net_fe .gt. 0)          &
+>             used = g_send_data(mixo(1)%id_jingest_net_fe, mixo(1)%jingest_net_fe*rho_dzt,           &
+>             model_time, rmask = grid_tmask,&
+>             is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+10965a11363,11366
+>     if (bact(1)%id_juptake_fe .gt. 0)          &
+>        used = g_send_data(bact(1)%id_juptake_fe, bact(1)%juptake_fe*rho_dzt,           &
+>        model_time, rmask = grid_tmask,&
+>        is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+10973a11375,11378
+>     if (bact(1)%id_jprod_fed .gt. 0)          &
+>        used = g_send_data(bact(1)%id_jprod_fed, bact(1)%jprod_fed*rho_dzt,           &
+>        model_time, rmask = grid_tmask,&
+>        is_in=isc, js_in=jsc, ks_in=1,ie_in=iec, je_in=jec, ke_in=nk)
+12471c12876
+<         cobalt%p_fedet(:,:,:,tau))  * cobalt%Rho_0,  &
+---
+>         cobalt%p_fedet(:,:,:,tau) + cobalt%p_febact(:,:,:,tau))  * cobalt%Rho_0,  &
+13978a14384
+>     allocate(bact(1)%f_fe(isd:ied,jsd:jed,nk))             ; bact(1)%f_fe            = 0.0
+13980a14387
+>     allocate(bact(1)%jzloss_fe(isd:ied,jsd:jed,nk))        ; bact(1)%jzloss_fe       = 0.0
+13982a14390
+>     allocate(bact(1)%jvirloss_fe(isd:ied,jsd:jed,nk))      ; bact(1)%jvirloss_fe     = 0.0
+13986a14395
+>     allocate(bact(1)%juptake_fe(isd:ied,jsd:jed,nk))       ; bact(1)%juptake_fe      = 0.0
+13988a14398
+>     allocate(bact(1)%jprod_fed(isd:ied,jsd:jed,nk))        ; bact(1)%jprod_fed       = 0.0
+14020a14431,14434
+>     allocate(mixo(1)%juptake_max_nh4(isd:ied,jsd:jed,nk))  ; mixo(1)%juptake_max_nh4    = 0.0
+>     allocate(mixo(1)%juptake_max_no3(isd:ied,jsd:jed,nk))  ; mixo(1)%juptake_max_no3    = 0.0
+>     allocate(mixo(1)%juptake_max_po4(isd:ied,jsd:jed,nk))  ; mixo(1)%juptake_max_po4    = 0.0
+>     allocate(mixo(1)%juptake_max_fe(isd:ied,jsd:jed,nk))  ; mixo(1)%juptake_max_fe    = 0.0
+14026a14441,14459
+>     allocate(mixo(1)%jingest_net_n(isd:ied,jsd:jed,nk))    ; mixo(1)%jingest_net_n     = 0.0
+>     allocate(mixo(1)%jingest_net_p(isd:ied,jsd:jed,nk))    ; mixo(1)%jingest_net_p     = 0.0
+>     allocate(mixo(1)%jingest_net_fe(isd:ied,jsd:jed,nk))    ; mixo(1)%jingest_net_fe     = 0.0
+>     allocate(mixo(1)%inc_fe(isd:ied,jsd:jed,nk))    ; mixo(1)%inc_fe     = 0.0
+>     allocate(mixo(1)%avail_fe(isd:ied,jsd:jed,nk))    ; mixo(1)%avail_fe     = 0.0
+>     allocate(mixo(1)%excess_hetero_n(isd:ied,jsd:jed,nk))      ; mixo(1)%excess_hetero_n       = 0.0
+>     allocate(mixo(1)%excess_hetero_p(isd:ied,jsd:jed,nk))      ; mixo(1)%excess_hetero_p       = 0.0
+>     allocate(mixo(1)%excess_hetero_fe(isd:ied,jsd:jed,nk))      ; mixo(1)%excess_hetero_fe       = 0.0
+>     allocate(mixo(1)%used_n(isd:ied,jsd:jed,nk))      ; mixo(1)%used_n       = 0.0
+>     allocate(mixo(1)%used_p(isd:ied,jsd:jed,nk))      ; mixo(1)%used_p       = 0.0
+>     allocate(mixo(1)%frac_no3(isd:ied,jsd:jed,nk))      ; mixo(1)%frac_no3       = 0.0
+>     allocate(mixo(1)%frac_nh4(isd:ied,jsd:jed,nk))      ; mixo(1)%frac_nh4       = 0.0
+>     allocate(mixo(1)%frac_po4(isd:ied,jsd:jed,nk))      ; mixo(1)%frac_po4       = 0.0
+>     allocate(mixo(1)%frac_het_n(isd:ied,jsd:jed,nk))      ; mixo(1)%frac_het_n       = 0.0
+>     allocate(mixo(1)%frac_het_p(isd:ied,jsd:jed,nk))      ; mixo(1)%frac_het_p       = 0.0
+>     allocate(mixo(1)%int_nlim(isd:ied,jsd:jed,nk))   ; mixo(1)%int_nlim     = 0.0
+>     allocate(mixo(1)%int_plim(isd:ied,jsd:jed,nk))   ; mixo(1)%int_plim     = 0.0
+>     allocate(mixo(1)%int_felim(isd:ied,jsd:jed,nk))   ; mixo(1)%int_felim     = 0.0
+>     allocate(mixo(1)%int_lim(isd:ied,jsd:jed,nk))   ; mixo(1)%int_lim     = 0.0
+14030a14464,14465
+>     allocate(mixo(1)%fe2n_photo(isd:ied,jsd:jed,nk))   ; mixo(1)%fe2n_photo     = 0.0
+>     allocate(mixo(1)%def_fe_photo(isd:ied,jsd:jed,nk)) ; mixo(1)%def_fe_photo   = 0.0
+14032a14468,14470
+>     allocate(mixo(1)%ngrowth(isd:ied,jsd:jed,nk))      ; mixo(1)%ngrowth        = 0.0
+>     allocate(mixo(1)%pgrowth(isd:ied,jsd:jed,nk))      ; mixo(1)%pgrowth        = 0.0
+>     allocate(mixo(1)%fegrowth(isd:ied,jsd:jed,nk))     ; mixo(1)%fegrowth       = 0.0
+14041a14480,14482
+>     allocate(mixo(1)%jingest_n_spec(isd:ied,jsd:jed,nk)); mixo(1)%jingest_n_spec = 0.0
+>     allocate(mixo(1)%jingest_p_spec(isd:ied,jsd:jed,nk)); mixo(1)%jingest_p_spec = 0.0
+>     allocate(mixo(1)%jingest_fe_spec(isd:ied,jsd:jed,nk)); mixo(1)%jingest_fe_spec = 0.0
+14143a14585
+>     allocate(cobalt%jfebact(isd:ied, jsd:jed, 1:nk))      ; cobalt%jfebact=0.0
+14549a14992
+>     deallocate(bact(1)%f_fe)
+14553c14996,14997
+<     deallocate(bact(1)%jvirloss_p)   
+---
+>     deallocate(bact(1)%jvirloss_p)
+>     deallocate(bact(1)%jvirloss_fe)   
+14557a15002
+>     deallocate(bact(1)%juptake_fe)
+14559a15005
+>     deallocate(bact(1)%jprod_fed)
+14590a15037,15040
+>     deallocate(mixo(1)%juptake_max_nh4)
+>     deallocate(mixo(1)%juptake_max_no3)
+>     deallocate(mixo(1)%juptake_max_po4)
+>     deallocate(mixo(1)%juptake_max_fe)
+14596a15047,15065
+>     deallocate(mixo(1)%jingest_net_n)
+>     deallocate(mixo(1)%jingest_net_p)
+>     deallocate(mixo(1)%jingest_net_fe)
+>     deallocate(mixo(1)%inc_fe)
+>     deallocate(mixo(1)%avail_fe)
+>     deallocate(mixo(1)%excess_hetero_n)
+>     deallocate(mixo(1)%excess_hetero_p)
+>     deallocate(mixo(1)%excess_hetero_fe)
+>     deallocate(mixo(1)%used_n)
+>     deallocate(mixo(1)%used_p)
+>     deallocate(mixo(1)%frac_no3)
+>     deallocate(mixo(1)%frac_nh4)
+>     deallocate(mixo(1)%frac_po4)
+>     deallocate(mixo(1)%frac_het_n)
+>     deallocate(mixo(1)%frac_het_p)
+>     deallocate(mixo(1)%int_nlim)
+>     deallocate(mixo(1)%int_plim)
+>     deallocate(mixo(1)%int_felim)
+>     deallocate(mixo(1)%int_lim)
+14600a15070,15071
+>     deallocate(mixo(1)%fe2n_photo)
+>     deallocate(mixo(1)%def_fe_photo)
+14602a15074,15076
+>     deallocate(mixo(1)%ngrowth)
+>     deallocate(mixo(1)%pgrowth)
+>     deallocate(mixo(1)%fegrowth)
+14611a15086,15088
+>     deallocate(mixo(1)%jingest_n_spec)
+>     deallocate(mixo(1)%jingest_p_spec)
+>     deallocate(mixo(1)%jingest_fe_spec)
+14721c15198,15199
+<     deallocate(cobalt%jnbact)  
+---
+>     deallocate(cobalt%jnbact)
+>     deallocate(cobalt%jfebact)   
+14742,14743c15220,15221
+<     deallocate(cobalt%jfesm) 
+<     deallocate(cobalt%jfemx) 
+---
+>     deallocate(cobalt%jfesm)
+>     deallocate(cobalt%jfemx)

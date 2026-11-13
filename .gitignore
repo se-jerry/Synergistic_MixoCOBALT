@@ -1,0 +1,10 @@
+RESTART/
+.datasets/
+datasets/
+*.nc.0*
+
+
+*.nc
+*.o
+*.mod
+*.a
